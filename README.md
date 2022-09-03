@@ -1,12 +1,24 @@
-# kpi_schedule
-Tg bot python
+[@K_P_I_schedule_bot](https://t.me/K_P_I_schedule_bot)
 
 ## Бот для зручного перегляду розкладу у Telegram
 
-`main.py`  головний скрипта
-`mongo.py` скрипт завантаження та оновлення бази данних 
+Можливості показу:
+- розкладу на сьогодні
+- розкладу на завтра
+- розкладу на тиждень
+- розкладу на наступнийТиждень
+- дзвінків
 
-### Всстановлення
+
+TODO:
+- [x] Перегляд розкладу групи
+- [ ] Щоденні нагадування
+- [ ] Зеркало у Matrix
+
+* `main.py`  головний скрипта
+* `mongo.py` скрипт завантаження та оновлення бази данних 
+
+## Всстановлення
 
 Інсталяція [mongodb](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/)
 
@@ -15,8 +27,7 @@ sudo apt install python3
 pip3 install certbot aiohttp cchardet aiodns pyTelegramBotAPI pymongo
 ```
 
-Встановлюємо ssl сертефікати
-`sudo certbot`
+Встановлюємо ssl сертефікати `sudo certbot`
 
 Додаємо дозвіл на читання сертифікатів
 ```bash
