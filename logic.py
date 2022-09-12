@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from datetime import datetime
 from requests import get as req_get
 
-BOT_VERSION='0.5'
+BOT_VERSION = '0.5'
 
 db = MongoClient('localhost', 27017).telegram_bot
 
@@ -34,7 +34,7 @@ COMMAND_LIST = {
 COMMAND = dict(zip(tuple(COMMAND_LIST.keys()), [row[0] for row in COMMAND_LIST.values()]))
 
 HELP_STRING = '\n'.join(
-    ['*Просто бот для КПІшного розкладу*\n'] +
+    ['Просто бот для КПІшного розкладу\n'] +
     [' або '.join([f'/{i}' for i in row]) for row in COMMAND.values()]
 )
 
@@ -60,7 +60,7 @@ def get_help(text: str) -> str:
             return '\n'.join(COMMAND_LIST[x][1])
     return 'Команду не знайдено'
 
-def get_group(chat_id, text):
+def get_group(chat_id:str, text:str) -> str:
 
     text = text.split()
     if len(text) != 2:
@@ -108,7 +108,6 @@ def get_nextweek(chat_id:str, table='chats') -> str:
     )
 
 def get_info(message_chat_id:str) -> str:
-    print(db.chats.find_one({'chat_id': message_chat_id}))
     return '\n'.join(
         [
             f'Зараз {day_now()+1} день тижня',
@@ -125,6 +124,10 @@ def schedule_answer(message_chat_id:str, week:str, day=None, table='chats') -> l
     text = []
     if day == 6: return ['Неділя, вихідний🥳']
     if day != None: result = [result[day]]
+
+    for i in range(len(result)):
+        result[i]['pairs'] = sorted(result[i]['pairs'], key=lambda x: int(x['time'].split('.')[0]))
+
     for res in result:
         text.append(f"     `{res['day']}`")
         for pair in res['pairs']:
@@ -135,7 +138,7 @@ def schedule_answer(message_chat_id:str, week:str, day=None, table='chats') -> l
                 text.append(f"Лектор{word_ending}: {pair['teacherName']}")
             text.append('')
         if day == None: text.append('')
-    if text[-2] == '     `\u0421\u0431`' and len(text) > 3:
+    if len(text) > 3 and text[-2] == '     `\u0421\u0431`':
         del text[-2]
     return text
 
@@ -148,5 +151,3 @@ def week_now() -> str:
 def day_now() -> int:
     return datetime.weekday(datetime.now())
 #    return req_get('https://schedule.kpi.ua/api/time/current').json()['data']['currentDay']
-
-
