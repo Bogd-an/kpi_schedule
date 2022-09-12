@@ -2,14 +2,10 @@ import telebot, ssl
 from aiohttp import web
 from os import environ
 from logic import (
-    COMMAND,
-    get_help,
-    TIMETABLE,
-    get_group,
-    get_today,
-    get_tomorrow,
-    get_week,
-    get_nextweek,
+    COMMAND,   TIMETABLE,
+    get_help,  get_group,
+    get_today, get_tomorrow,
+    get_week,  get_nextweek,
     get_info
 )
 
